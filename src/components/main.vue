@@ -5,6 +5,7 @@
       <v-app-bar color="teal">
         <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <v-toolbar-title>MeTooIDK <b>Tools</b></v-toolbar-title>
+        <v-btn @click="toggleTheme">Theme</v-btn>
       </v-app-bar>
       <v-navigation-drawer v-model="drawer">
         <v-list density="compact" v-model="currentPage" nav>
@@ -30,6 +31,7 @@
 
 <script>
 import apm from './apm.vue';
+import { useTheme} from 'vuetify';
 export default {
   name: 'LandingPage',
   data(){
@@ -42,11 +44,19 @@ export default {
   apm
   },
   methods: {
-    async searchAPM(query){
+    async searchAPM(query) {
       console.log(query);
     }
 
 
+  },
+  setup () {
+    const theme = useTheme()
+
+    return {
+      theme,
+      toggleTheme: () => theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+    }
   }
 }
 </script>
