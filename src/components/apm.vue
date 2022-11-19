@@ -1,9 +1,14 @@
 
 <template>
-
+  <v-alert color="error" v-if="errorMessages" icon="$error">
+    {{ errorMessages }}
+  </v-alert>
+  <v-alert color="info" v-if="infoMessages" icon="$info">
+    {{ infoMessages }}
+  </v-alert>
     <v-card title="APM Searcher" text="Search & Download Music From APM Music.">
       <v-text-field v-model="queryToText"
-          label="Type Something There"
+          label="Type Something There (Album/Name/Category)"
           placeholder="Song Name"
           outlined
       ></v-text-field>
@@ -14,6 +19,10 @@
       >
         Search
       </v-btn>
+      <v-row>
+        <v-checkbox v-model="loadAlbum" label="Load Album Picture"></v-checkbox>
+        <v-checkbox v-model="ShowType" label="Show Music Type"></v-checkbox>
+      </v-row>
       <v-progress-linear v-if="this.loading" indeterminate></v-progress-linear>
     </v-card>
      <v-card    class="mx-auto"
@@ -26,8 +35,33 @@
              </div>
              <v-list-item-title class="text-h5 mb-1">
                {{  item.trackTitle }}
+               <v-chip v-if="item.hasLyrics">
+               Has Lyrics
+               </v-chip>
+               <v-chip class="ma-2"
+                       color="primary"
+                       outlined pill v-for="(item) in item.composer" :key="item">
+
+
+                 {{item }}
+                 <v-icon left>
+                   mdi-account-outline
+                 </v-icon>
+               </v-chip>
+               <!--Vue Chip - Composer -->
+
              </v-list-item-title>
-             <v-list-item-subtitle>{{  item.description }}</v-list-item-subtitle>
+             <v-list-item-subtitle>{{  item.description }}
+               <template v-if="ShowType">
+                 <v-chip  class="ma-2" pill v-for="(item) in item.terms " :key="item">
+
+
+                   {{item.value }}
+                 </v-chip>
+               </template>
+               <!--Vue Chip - Type -->
+
+             </v-list-item-subtitle>
            </v-list-item-content>
 
            <v-list-item-avatar
@@ -35,6 +69,14 @@
                size="80"
                color="grey"
            ></v-list-item-avatar>
+           <v-avatar
+               class="ma-3"
+               size="125"
+               rounded="0"
+               v-if="loadAlbum"
+           >
+             <v-img :src="item.albumArtLargeUrl"></v-img>
+           </v-avatar>
          </v-list-item>
 
        <v-card-actions>
@@ -58,6 +100,8 @@ export default  {
   methods: {
 
     async SearchAPM(query){
+      this.infoMessages = ""
+      this.errorMessages = ""
       this.loading = true
       let encoded = encodeURIComponent(query)
       console.log(encoded)
@@ -72,12 +116,17 @@ export default  {
         data: `{"limit":25,"offset":0,"sort":"relevancy_base","terms":[{"type":"text","field":["tags","track_title","track_description","album_title","album_description","sound_alikes","lyrics","library","composer"],"value":"${query}","operation":"must"}]}`
       }).then((res) => {
             console.log(res);
+            this.infoMessages = "Search Completed"
+
             this.loading = false
             this.list = res.data.rows
+            if (res.data.rows.length == 0){
+              this.infoMessages = "No Results Found"
+            }
           }).catch((err) => {
             console.log(err);
             this.loading = false
-
+             this.errorMessages = err
           })
     }
   },
@@ -87,7 +136,11 @@ export default  {
       currentPage: "",
       loading: this.loading,
       list: this.list,
-      queryToText: ""
+      queryToText: "",
+      errorMessages: "",
+      infoMessages: "",
+      loadAlbum: false,
+      ShowType: false
     }
   },
 }
