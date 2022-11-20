@@ -131,6 +131,14 @@
            Your browser does not support the audio element.
          </audio>
        </v-card-actions>
+       <v-expansion-panels @click="fetchLyrics(item.id)" v-if="item.hasLyrics">
+         <v-expansion-panel
+             title="Lyrics"
+             
+             :text="lyrics"
+         >
+         </v-expansion-panel>
+       </v-expansion-panels>
        </v-card>
   </template>
 </template>
@@ -193,6 +201,17 @@ export default  {
 
       }
       */
+    },
+    fetchLyrics(id){
+      this.axios({
+        url: `https://api.apmmusic.com/search/tracks/${id}/lyrics`
+      }).then((res) => {
+        this.lyrics = res.data
+        console.log(res);
+      }).catch((err) => {
+        this.lyrics = "Error While Loading Lyrics"
+        console.log(err);
+      })
     }
   },
   data() {
@@ -206,7 +225,8 @@ export default  {
       infoMessages: "",
       loadAlbum: false,
       ShowType: false,
-      dialog: false
+      dialog: false,
+      lyrics: ""
     }
   },
 }
