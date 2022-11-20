@@ -8,8 +8,9 @@
         <v-btn @click="toggleTheme">Theme</v-btn>
       </v-app-bar>
       <v-navigation-drawer v-model="drawer">
-        <v-list density="compact" v-model="currentPage" nav>
-          <v-list-item prepend-icon="mdi-folder" @click="currentPage == 'home' ? ((currentPage = 'home' ),(title = 'Tools')): ((currentPage = 'home'),(title = 'Tools'));" title="Homes" value="home"></v-list-item>
+        <v-list density="compact" v-model="currentPage" :active-color="color"
+                variant="plain"  nav>
+          <v-list-item prepend-icon="mdi-home" @click="currentPage == 'home' ? ((currentPage = 'home' ),(title = 'Tools')): ((currentPage = 'home'),(title = 'Tools'));" title="Homes" value="home"></v-list-item>
           <v-list-item prepend-icon="mdi-equalizer" @click="currentPage == 'apm' ? ((currentPage = 'home'),(title = 'Tools')) : ((currentPage = 'apm',(title = 'MusicLibrary')));" title="APM Music" value="apm"></v-list-item>
           <v-list-item prepend-icon="mdi-message" @click="currentPage == 'message' ? (( currentPage = 'home' ) , ( title = 'Tools')) : ((currentPage = 'message'),(title = 'ChatBeta'));" title="Chat Bot" value="cb"></v-list-item>
         </v-list>
@@ -40,7 +41,8 @@ export default {
     return {
       drawer: true,
       currentPage: "home",
-      title: "Tools"
+      title: "Tools",
+      color: "teal"
     }
   },
   components: {
