@@ -203,14 +203,18 @@ export default  {
       */
     },
     fetchLyrics(id){
+      this.loading = true
+      this.errorMessages = ""
       this.axios({
         url: `https://api.apmmusic.com/search/tracks/${id}/lyrics`
       }).then((res) => {
         this.lyrics = res.data
         console.log(res);
+        this.loading = false
       }).catch((err) => {
-        this.lyrics = "Error While Loading Lyrics"
+        this.lyrics = "<b>Error While Loading Lyrics</b>"
         this.errorMessages = "Cannot Load Lyrics! Maybe Because CORS? Try Again Later."
+        this.loading = false
         console.log(err);
       })
     }
