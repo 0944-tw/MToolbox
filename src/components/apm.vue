@@ -1,5 +1,30 @@
 
 <template>
+  <template>
+    <div class="text-center">
+      <v-dialog
+          v-model="dialog"
+      >
+        <template v-slot:activator="{ props }">
+          <v-btn
+              color="primary"
+              v-bind="props"
+          >
+            Open Dialog
+          </v-btn>
+        </template>
+
+        <v-card>
+          <v-card-text>
+            You Need Alow Pop-Up On This Website if you wanna download more then 2 songs at same time.
+          </v-card-text>
+          <v-card-actions>
+            <v-btn color="primary" block @click="dialog = false">Close Dialog</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </div>
+  </template>
   <v-alert color="error" v-if="errorMessages" icon="$error">
     {{ errorMessages }}
   </v-alert>
@@ -12,13 +37,15 @@
           placeholder="Song Name"
           outlined
       ></v-text-field>
-      <v-btn v-if="!this.loading"
-          @click="SearchAPM(queryToText)"
-          depressed
-          color="primary"
-      >
-        Search
-      </v-btn>
+
+       <v-btn v-if="!this.loading"
+              @click="SearchAPM(queryToText)"
+              depressed
+              color="primary"
+       >
+         Search
+       </v-btn>
+
 
       <v-row>
         <v-checkbox v-model="loadAlbum" label="Load Album Picture"></v-checkbox>
@@ -26,9 +53,23 @@
       </v-row>
 
       <v-progress-linear v-if="this.loading" indeterminate></v-progress-linear>
+      <v-btn
+          depressed
+          color="primary"
+          @click="downloadAll"
+          v-if="list"
+      >
+        Download All
+      </v-btn>
+
     </v-card>
+
+
+
+<template v-for="(item,index) in list" :key="item.id">
+  <br>
      <v-card    class="mx-auto"
-                outlined v-for="(item,index) in list" :key="item.id">
+                outlined>
 
          <v-list-item three-line>
            <v-list-item-content>
@@ -91,6 +132,7 @@
          </audio>
        </v-card-actions>
        </v-card>
+  </template>
 </template>
 
 
@@ -117,6 +159,7 @@ export default  {
         },
         data: `{"limit":25,"offset":0,"sort":"relevancy_base","terms":[{"type":"text","field":["tags","track_title","track_description","album_title","album_description","sound_alikes","lyrics","library","composer"],"value":"${query}","operation":"must"}]}`
       }).then((res) => {
+
             console.log(res);
             this.infoMessages = "Search Completed"
 
@@ -125,11 +168,31 @@ export default  {
             if (res.data.rows.length == 0){
               this.infoMessages = "No Results Found"
             }
+
           }).catch((err) => {
             console.log(err);
             this.loading = false
              this.errorMessages = err
           })
+    },
+    downloadAll(){
+      this.dialog = true
+      this.list.forEach((item) => {
+        window.open(item.audioUrl, '_blank');
+      })
+      /*
+      var tempLink = document.createElement('a');
+      document.body.appendChild(tempLink);
+      for (let i = 0; i < this.list.length; i++) {
+        const element = this.list[i];
+        console.log(element.audioUrl)
+        let fileUrl = element.audioUrl
+        tempLink.setAttribute('href', fileUrl);
+        tempLink.setAttribute('download', fileUrl.split('/')[fileUrl.split('/').length*1-1*1]);
+        tempLink.click();
+
+      }
+      */
     }
   },
   data() {
@@ -142,7 +205,8 @@ export default  {
       errorMessages: "",
       infoMessages: "",
       loadAlbum: false,
-      ShowType: false
+      ShowType: false,
+      dialog: false
     }
   },
 }

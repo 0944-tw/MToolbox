@@ -12,7 +12,8 @@
                 variant="plain"  nav>
           <v-list-item prepend-icon="mdi-home" @click="currentPage == 'home' ? ((currentPage = 'home' ),(title = 'Tools')): ((currentPage = 'home'),(title = 'Tools'));" title="Homes" value="home"></v-list-item>
           <v-list-item prepend-icon="mdi-equalizer" @click="currentPage == 'apm' ? ((currentPage = 'home'),(title = 'Tools')) : ((currentPage = 'apm',(title = 'MusicLibrary')));" title="APM Music" value="apm"></v-list-item>
-          <v-list-item prepend-icon="mdi-message" @click="currentPage == 'message' ? (( currentPage = 'home' ) , ( title = 'Tools')) : ((currentPage = 'message'),(title = 'ChatBeta'));" title="Chat Bot" value="cb"></v-list-item>
+          <v-list-item prepend-icon="mdi-info" @click="currentPage == 'message' ? (( currentPage = 'home' ) , ( title = 'Tools')) : ((currentPage = 'message'),(title = 'AI Lab'));" title="Chat Bot" value="cb"></v-list-item>
+          <v-list-item prepend-icon="mdi-question" @click="currentPage == 'about' ? (( currentPage = 'home' ) , ( title = 'Tools')) : ((currentPage = 'about'),(title = 'About'));" title="About" value="cb"></v-list-item>
         </v-list>
       </v-navigation-drawer>
 
@@ -26,6 +27,9 @@
         <v-container  v-if="currentPage == 'apm'">
           <apm></apm>
         </v-container>
+        <v-container  v-if="currentPage == 'about'">
+          <about></about>
+        </v-container>
       </v-main>
     </v-app>
   </div>
@@ -34,6 +38,7 @@
 
 <script>
 import apm from './apm.vue';
+import about from './about.vue';
 import { useTheme} from 'vuetify';
 export default {
   name: 'LandingPage',
@@ -46,7 +51,8 @@ export default {
     }
   },
   components: {
-  apm
+  apm,
+    about
   },
   methods: {
     async searchAPM(query) {
