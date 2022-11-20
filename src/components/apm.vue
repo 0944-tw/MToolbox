@@ -134,7 +134,7 @@
        <v-expansion-panels @click="fetchLyrics(item.id)" v-if="item.hasLyrics">
          <v-expansion-panel
              title="Lyrics"
-             
+
              :text="lyrics"
          >
          </v-expansion-panel>
@@ -210,6 +210,7 @@ export default  {
         console.log(res);
       }).catch((err) => {
         this.lyrics = "Error While Loading Lyrics"
+        this.errorMessages = "Cannot Load Lyrics! Maybe Because CORS? Try Again Later."
         console.log(err);
       })
     }
