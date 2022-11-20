@@ -19,14 +19,16 @@
       >
         Search
       </v-btn>
+
       <v-row>
         <v-checkbox v-model="loadAlbum" label="Load Album Picture"></v-checkbox>
         <v-checkbox v-model="ShowType" label="Show Music Type"></v-checkbox>
       </v-row>
+
       <v-progress-linear v-if="this.loading" indeterminate></v-progress-linear>
     </v-card>
      <v-card    class="mx-auto"
-                outlined v-for="(item,index) in list" :key="item.trackTitle">
+                outlined v-for="(item,index) in list" :key="item.id">
 
          <v-list-item three-line>
            <v-list-item-content>
