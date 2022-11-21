@@ -47,7 +47,12 @@
       <!-- -->
 
       <v-card v-if="albumTracks">
+
+
         <v-card-text>
+          <v-btn @click="downloadAll(albumTracks)">
+            Download All 
+          </v-btn>
           <v-container fluid>
             <v-row dense>
 
@@ -123,7 +128,7 @@
       <v-btn
           depressed
           color="primary"
-          @click="downloadAll"
+          @click="downloadAll(list)"
           v-if="list"
       >
         Download All
@@ -273,9 +278,9 @@ export default  {
         this.errorMessages = err
       })
     },
-    downloadAll(){
+    downloadAll(list){
       this.dialog = true
-      this.list.forEach((item) => {
+      list.forEach((item) => {
         window.open(item.audioUrl, '_blank');
       })
       /*
