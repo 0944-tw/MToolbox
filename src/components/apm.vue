@@ -51,7 +51,7 @@
 
         <v-card-text>
           <v-btn @click="downloadAll(albumTracks)">
-            Download All 
+            Download All
           </v-btn>
           <v-container fluid>
             <v-row dense>
