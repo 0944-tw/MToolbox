@@ -34,7 +34,7 @@
                    <v-text-field label="X" v-model="item.x"></v-text-field>
                    <v-text-field label="Y" v-model="item.y"></v-text-field>
                  </v-card>
-                 <v-card v-if="item.type == 'images'">
+                 <v-card v-if="item.type == 'image'">
                    <v-text-field label="X" v-model="item.x"></v-text-field>
                    <v-text-field label="Y" v-model="item.y"></v-text-field>
                    <v-text-field label="Width" v-model="item.width"></v-text-field>
@@ -70,7 +70,7 @@ export default {
   name: 'ImageProcAPI',
   data(){
     return {
-      type: ["text","images"],
+      type: ["text","image"],
      json: "",
       error: "",
       src: "",
@@ -79,7 +79,7 @@ export default {
         x: 400,
         y: 400,
        objects: [
-         
+
        ]
       }
     }
