@@ -1,50 +1,14 @@
 <template>
-
-  <div id="app">
-    <v-app>
-      <v-app-bar color="teal">
-        <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        <v-toolbar-title>MeTooIDK <b>{{ title }}</b></v-toolbar-title>
-        <v-btn @click="toggleTheme" prepend-icon="mdi-brightness-6"></v-btn>
-      </v-app-bar>
-      <v-navigation-drawer v-model="drawer">
-        <v-list density="compact" v-model="currentPage" :active-color="color"
-                variant="plain"  nav>
-          <v-list-item prepend-icon="mdi-home" @click="currentPage == 'home' ? ((currentPage = 'home' ),(title = 'Tools')): ((currentPage = 'home'),(title = 'Tools'));" title="Homes" value="home"></v-list-item>
-          <v-list-item prepend-icon="mdi-equalizer" @click="currentPage == 'apm' ? ((currentPage = 'home'),(title = 'Tools')) : ((currentPage = 'apm',(title = 'MusicLibrary')));" title="APM Music" value="apm"></v-list-item>
-          <v-list-item prepend-icon="mdi-robot" @click="currentPage == 'message' ? (( currentPage = 'home' ) , ( title = 'Tools')) : ((currentPage = 'message'),(title = 'AI Lab'));" title="Chat Bot" value="cb"></v-list-item>
-          <v-list-item prepend-icon="mdi-robot" @click="currentPage == 'message' ? (( currentPage = 'home' ) , ( title = 'Tools')) : ((currentPage = 'img'),(title = 'APILab'));" title="Image Proccess API" value="imgproc"></v-list-item>
-          <v-list-item prepend-icon="mdi-help" @click="currentPage == 'about' ? (( currentPage = 'home' ) , ( title = 'Tools')) : ((currentPage = 'about'),(title = 'About'));" title="About" value="about"></v-list-item>
-        </v-list>
-      </v-navigation-drawer>
-
-      <v-main>
-        <v-container v-if="currentPage == 'home'">
-          <v-card title="Welcome to MeTooIDK Tools" text="Because im lazy to download music so i created this.">
-
-          </v-card>
-
-        </v-container>
-        <v-container  v-if="currentPage == 'apm'">
-          <apm></apm>
-        </v-container>
-        <v-container  v-if="currentPage == 'about'">
-          <about></about>
-        </v-container>
-        <v-container  v-if="currentPage == 'img'">
-          <iproc></iproc>
-        </v-container>
-      </v-main>
-    </v-app>
-  </div>
-
+<v-app>
+  <v-layout title="Home" current-page="home">
+    <v-card title="Switching to Vue Router.">
+    </v-card>
+  </v-layout>
+</v-app>
 </template>
 
 <script>
-import apm from './apm.vue';
-import about from './about.vue';
-import iproc from './imageproc.vue';
-import { useTheme} from 'vuetify';
+import vLayout from './layout'
 export default {
   name: 'LandingPage',
   data(){
@@ -55,25 +19,8 @@ export default {
       color: "teal"
     }
   },
-  components: {
-    apm,
-    about,
-    iproc
-  },
-  methods: {
-    async searchAPM(query) {
-      console.log(query);
-    }
-
-
-  },
-  setup () {
-    const theme = useTheme()
-
-    return {
-      theme,
-      toggleTheme: () => theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
-    }
+  components:{
+    vLayout
   }
 }
 </script>

@@ -1,16 +1,13 @@
 
 <template>
-  <Layout></Layout>
+  <router-view></router-view>
 
 </template>
 
 <script>
-import Layout from './components/main.vue';
+
 export default {
   name: 'App',
-  components:{
-    Layout
-  },
   data() {
     return {
       drawer: true,

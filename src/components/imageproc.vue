@@ -1,4 +1,5 @@
 <template>
+  <layout title="IMGLab">
   <v-alert v-if="error" color="error" icon="$error">
     {{  error}}
   </v-alert>
@@ -13,8 +14,10 @@
 
   </v-card>
 <img :src="src">
+  </layout>
 </template>
 <script>
+import Layout from './layout'
 export default {
   name: 'ImageProcAPI',
   data(){
@@ -25,7 +28,7 @@ export default {
     }
   },
   components: {
-
+  Layout
   },
   methods: {
     submitAPI() {
