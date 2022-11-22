@@ -1,6 +1,6 @@
 <template>
   <layout>
-  <v-card title="About MeTooIDK Toolbox 1.2" subtitle="Lastest Version: 1.2 MIT License. ">
+  <v-card title="About MeTooIDK Toolbox 1.21" subtitle="Lastest Version: 1.21 MIT License. ">
 
 
 
