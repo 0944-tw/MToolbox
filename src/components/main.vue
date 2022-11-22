@@ -1,10 +1,10 @@
 <template>
-<v-app>
+
   <v-layout title="Home" current-page="home">
     <v-card title="Switching to Vue Router.">
     </v-card>
   </v-layout>
-</v-app>
+
 </template>
 
 <script>
